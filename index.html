@@ -60,6 +60,11 @@
         .copy-btn:hover {
             background-color: #0056b3;
         }
+        .warning {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
     </style>
     <script>
         function showTab(tabId) {
@@ -70,9 +75,18 @@
         }
 
         function generateAssociationCode() {
-            const variable1 = document.getElementById('variable1').value;
-            const variable2 = document.getElementById('variable2').value;
-            const variable3 = document.getElementById('variable3').value;
+            const variable1 = document.getElementById('variable1').value.trim();
+            const variable2 = document.getElementById('variable2').value.trim();
+            const variable3 = document.getElementById('variable3').value.trim();
+            const warning = document.getElementById('warning-message');
+
+            // Check if Variable 1 or Variable 2 are empty
+            if (!variable1 || !variable2) {
+                warning.textContent = "Variable 1 and Variable 2 must have a value!";
+                return; // Stop execution
+            }
+
+            warning.textContent = ""; // Clear any existing warning
 
             const pythonCode = `
 import os
@@ -326,7 +340,7 @@ ehr_df %>%
   finalfit(dependent, explanatory, 
            dependent_label_prefix = "")`;
 
-            document.getElementById('output-python').value = pythonCode.trim();
+           document.getElementById('output-python').value = pythonCode.trim();
             document.getElementById('output-r').value = rCode.trim();
         }
 
@@ -356,6 +370,7 @@ ehr_df %>%
         <input id="variable3" type="text" placeholder="e.g., 702953, 12345678">
 
         <button onclick="generateAssociationCode()">Generate Code</button>
+        <div id="warning-message" class="warning"></div>
 
         <div class="code-container">
             <h3>Python Code</h3>
