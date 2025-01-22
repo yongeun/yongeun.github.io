@@ -329,12 +329,12 @@ ehr_df$sex_cat <- as.factor(ehr_df$sex_cat)
 ehr_df$var_1 <- as.factor(ehr_df$var_1)
 ehr_df$var_2 <- as.factor(ehr_df$var_2)
 
-explanatory <- c("race_cat","ethnicity_cat","sex_cat")
+explanatory <- c("age","age_group_code","race_cat","ethnicity_cat","sex_cat")
 dependent <- "var_1"
 ehr_df %>%
     summary_factorlist(dependent, explanatory, p=TRUE, na_include=TRUE)
 
-explanatory <- c("race_cat","ethnicity_cat","sex_cat", "var_1")
+explanatory <- c("var_1","age_group_code","race_cat","ethnicity_cat","sex_cat")
 dependent <- "var_2"
 ehr_df %>% 
   finalfit(dependent, explanatory, 
